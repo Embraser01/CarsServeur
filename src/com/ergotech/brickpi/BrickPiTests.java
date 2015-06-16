@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  */
 public class BrickPiTests {
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         //BrickPi brickPi = BrickPi.getBrickPi();
         RemoteBrickPi brickPi = new RemoteBrickPi();
         brickPi.setPiAddress("192.168.5.101");
@@ -115,5 +115,5 @@ public class BrickPiTests {
         } catch (InterruptedException ex) {
             Logger.getLogger(BrickPiTests.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }*/
 }
