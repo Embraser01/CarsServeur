@@ -33,8 +33,8 @@ public class Main {
             socketserver = new ServerSocket(42424);
             socketduserveur = socketserver.accept();
             server = new Serveur(socketduserveur);
-            socketduserveur.close();
-            socketserver.close();
+            //socketduserveur.close();
+            //socketserver.close();
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }

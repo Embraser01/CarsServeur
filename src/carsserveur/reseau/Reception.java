@@ -31,7 +31,8 @@ public class Reception implements Runnable {
             try {
                 
                 message = in.readLine();
-                System.out.println(message);
+                if(message != null)
+                    System.out.println(message);
                 // TODO traitement
                 
             } catch (IOException ex) {
