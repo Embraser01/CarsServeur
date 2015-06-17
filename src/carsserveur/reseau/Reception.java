@@ -36,7 +36,7 @@ public class Reception implements Runnable {
                 // TODO traitement
                 
             } catch (IOException ex) {
-                Logger.getLogger(Reception.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(Reception.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
