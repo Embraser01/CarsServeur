@@ -20,7 +20,6 @@ public class Serveur {
     
     ServerSocket socketserver;
     Socket socketduserveur;
-    Traitement mTrait;
     BufferedReader in = null;
     PrintWriter out;
     

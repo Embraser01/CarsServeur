@@ -25,10 +25,10 @@ public class RunTraitement implements Runnable{
     private Motor leftMotor;
     private Motor rightMotor;
     
-    private boolean up = false;
-    private boolean right = false;
-    private boolean down = false;
-    private boolean left = false;
+    private volatile boolean up = false;
+    private volatile boolean right = false;
+    private volatile boolean down = false;
+    private volatile boolean left = false;
 
 
     public RunTraitement() {
