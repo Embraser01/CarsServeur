@@ -16,15 +16,13 @@ public class Reception implements Runnable {
 
     private BufferedReader in;
     private String message = null;
-    private Traitement trai = null;
     private RunTraitement threadTrai = null;
 
     public Reception(BufferedReader in){
 
         this.in = in;
-        this.trai = new Traitement();
         
-        this.threadTrai = new RunTraitement(this.trai);
+        this.threadTrai = new RunTraitement();
     }
         
     @Override
@@ -39,49 +37,49 @@ public class Reception implements Runnable {
                     switch(message.substring(0, 2)){
                                                     
                     case "10":
-                        trai.setUp(true);
-                        trai.setDown(false);
+                        threadTrai.setUp(true);
+                        threadTrai.setDown(false);
                         break;
                     case "20":
-                        trai.setUp(false);
+                        threadTrai.setUp(false);
                         break;
 
                     case "11":
-                        trai.setRight(true);
-                        trai.setLeft(false);
+                        threadTrai.setRight(true);
+                        threadTrai.setLeft(false);
                         break;
                     case "21":
-                        trai.setRight(false);
+                        threadTrai.setRight(false);
                         break;
 
                     case "12":
-                        trai.setDown(true);
-                        trai.setUp(false);
+                        threadTrai.setDown(true);
+                        threadTrai.setUp(false);
                         break;
                     case "22":
-                        trai.setDown(false);
+                        threadTrai.setDown(false);
                         break;
 
                     case "13":
-                        trai.setLeft(true);
-                        trai.setRight(false);
+                        threadTrai.setLeft(true);
+                        threadTrai.setRight(false);
                         break;
                     case "23":
-                        trai.setRight(false);
+                        threadTrai.setRight(false);
                         break;
 
                     case "01":
-                        trai.setUp(false);
-                        trai.setRight(false);
-                        trai.setDown(false);
-                        trai.setLeft(false);
+                        threadTrai.setUp(false);
+                        threadTrai.setRight(false);
+                        threadTrai.setDown(false);
+                        threadTrai.setLeft(false);
                         break;
 
                     default:
-                        trai.setUp(false);
-                        trai.setRight(false);
-                        trai.setDown(false);
-                        trai.setLeft(false);
+                        threadTrai.setUp(false);
+                        threadTrai.setRight(false);
+                        threadTrai.setDown(false);
+                        threadTrai.setLeft(false);
                         break;
                     }
                 }
