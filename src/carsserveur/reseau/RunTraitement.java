@@ -18,8 +18,9 @@ import java.util.logging.Logger;
  */
 public class RunTraitement implements Runnable{
     
-    private static final int SPEED_TURN = 100;
+    private static final int SPEED_TURN = 170;
     private static final int SPEED = 255;
+    private static final double ANGLE = 0.125;
     
     private BrickPi brickPi;
     private Motor leftMotor;
@@ -93,6 +94,8 @@ public class RunTraitement implements Runnable{
     
     @Override
     public void run() {
+        boolean isRight = false;
+        boolean isLeft = false;
         leftMotor.resetEncoder();
         rightMotor.resetEncoder();
         turnMotor.resetEncoder();
@@ -114,26 +117,28 @@ public class RunTraitement implements Runnable{
                 }
                 
                 if(right){
-                    
-                    if(turnMotor.getCurrentEncoderValue() >= 0)
-                        turnMotor.rotate(200, -SPEED_TURN);
+                    if(!isRight){
+                        turnMotor.setCommandedOutput(-SPEED);
+                        isLeft = false;
+                        isRight = true;
+                    }
                 }
                 else if(left){
-                    
-                    if(turnMotor.getCurrentEncoderValue() <= 0)
-                        turnMotor.rotate(200, SPEED_TURN);
+                    if(!isLeft){
+                        turnMotor.setCommandedOutput(SPEED);
+                        isRight = false;
+                        isLeft = true;
+                    }
                 }
                 else {
-                    
-                    if(turnMotor.getCurrentEncoderValue() > 10){
-                        System.out.println(turnMotor.getCurrentEncoderValue());
-                        turnMotor.rotate(turnMotor.getCurrentEncoderValue()/2, SPEED_TURN);
+                    if(isRight){
+                        turnMotor.rotate(ANGLE/2, SPEED_TURN);
+                        isRight = false;
                     }
-                    if(turnMotor.getCurrentEncoderValue() < -10) {
-                        System.out.println(turnMotor.getCurrentEncoderValue());
-                        turnMotor.rotate(turnMotor.getCurrentEncoderValue()/2, -SPEED_TURN);
+                    if(isLeft){
+                        turnMotor.rotate(ANGLE/2, -SPEED_TURN);
+                        isLeft = false;
                     }
-                    
                 }
                 
                 brickPi.updateValues();
