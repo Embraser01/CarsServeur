@@ -87,19 +87,49 @@ public class Traitement {
     
     public boolean exec() {
                 
-        
         while(true){
             try {
                 if(up && left){
-                    leftMotor.setCommandedOutput(200);
-                    rightMotor.setCommandedOutput(255);
+                    leftMotor.setCommandedOutput(Traitement.SPEED_TURN);
+                    rightMotor.setCommandedOutput(Traitement.SPEED);
                 }
-                
+                else if(up && right){
+                    leftMotor.setCommandedOutput(Traitement.SPEED);
+                    rightMotor.setCommandedOutput(Traitement.SPEED_TURN);
+                }
+                else if(down && left){
+                    leftMotor.setCommandedOutput(-Traitement.SPEED_TURN);
+                    rightMotor.setCommandedOutput(-Traitement.SPEED);
+                }
+                else if(down && right){
+                    leftMotor.setCommandedOutput(-Traitement.SPEED);
+                    rightMotor.setCommandedOutput(-Traitement.SPEED_TURN);
+                }
+                else if(up){
+                    leftMotor.setCommandedOutput(Traitement.SPEED);
+                    rightMotor.setCommandedOutput(Traitement.SPEED);
+                }
+                else if(down){
+                    leftMotor.setCommandedOutput(-Traitement.SPEED);
+                    rightMotor.setCommandedOutput(-Traitement.SPEED);
+                }
+                else if(left){
+                    leftMotor.setCommandedOutput(0);
+                    rightMotor.setCommandedOutput(Traitement.SPEED);
+                }
+                else if (right){
+                    leftMotor.setCommandedOutput(Traitement.SPEED);
+                    rightMotor.setCommandedOutput(0);
+                }
+                else{
+                    leftMotor.setCommandedOutput(0);
+                    rightMotor.setCommandedOutput(0);
+                }
                 brickPi.updateValues();
-                Thread.sleep(200);
+                Thread.sleep(150);
             } catch (InterruptedException ex) {
             // ignore
-            }   catch (IOException ex) {
+            } catch (IOException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
