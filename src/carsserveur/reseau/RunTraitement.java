@@ -104,12 +104,12 @@ public class RunTraitement implements Runnable{
         while(true){
             try {
                 if(up){
-                    leftMotor.setCommandedOutput(RunTraitement.SPEED);
-                    rightMotor.setCommandedOutput(RunTraitement.SPEED);
-                }
-                else if(down){
                     leftMotor.setCommandedOutput(-RunTraitement.SPEED);
                     rightMotor.setCommandedOutput(-RunTraitement.SPEED);
+                }
+                else if(down){
+                    leftMotor.setCommandedOutput(RunTraitement.SPEED);
+                    rightMotor.setCommandedOutput(RunTraitement.SPEED);
                 }
                 else {
                     leftMotor.setCommandedOutput(0);

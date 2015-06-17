@@ -6,8 +6,6 @@
 package carsserveur;
 
 import carsserveur.reseau.Serveur;
-import com.ergotech.brickpi.*;
-import com.ergotech.brickpi.motion.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -26,13 +24,12 @@ public class Main {
     public static void main(String[] args) {
         
         ServerSocket socketserver;
-        Socket socketduserveur = null;
-        Serveur server;
         
+        Serveur server;
         try {
             socketserver = new ServerSocket(42424);
-            socketduserveur = socketserver.accept();
-            server = new Serveur(socketduserveur);
+            
+            server = new Serveur(socketserver);
             //socketduserveur.close();
             //socketserver.close();
         } catch (IOException ex) {

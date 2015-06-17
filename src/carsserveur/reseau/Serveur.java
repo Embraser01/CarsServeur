@@ -23,31 +23,33 @@ public class Serveur {
     BufferedReader in = null;
     PrintWriter out;
     
-    public Serveur(Socket socketduserveur) {
+    public Serveur(ServerSocket socketserveur) {
 		
-        this.socketduserveur = socketduserveur;
+        this.socketserver = socketserveur;
         
-        try {
+        while(true){
+            try {
+                this.socketduserveur = socketserver.accept();
 
-            
-            System.out.println("Nouveau client connecté !");
-            out = new PrintWriter(socketduserveur.getOutputStream());
-            in = new BufferedReader(new InputStreamReader(socketduserveur.getInputStream()));
-            out.println("Vous êtes bien connecté sur le robot du projet Cars | Semaine Spé 2 2015 avec :");
-            out.println("\t - FERNANDES Marc-Antoine");
-            out.println("\t - PHAN Dominique");
-            out.println("\t - LE BOT Axel");
-            out.println("\t - DUCOROY Maxime");
-            out.flush();
-            out.println("00 - Début Transmission");
-            out.flush();
-            
-            Thread t = new Thread(new Reception(in));
-            t.start();
-            
+                System.out.println("Nouveau client connecté !");
+                out = new PrintWriter(socketduserveur.getOutputStream());
+                in = new BufferedReader(new InputStreamReader(socketduserveur.getInputStream()));
+                out.println("Vous êtes bien connecté sur le robot du projet Cars | Semaine Spé 2 2015 avec :");
+                out.println("\t - FERNANDES Marc-Antoine");
+                out.println("\t - PHAN Dominique");
+                out.println("\t - LE BOT Axel");
+                out.println("\t - DUCOROY Maxime");
+                out.flush();
+                out.println("00 - Début Transmission");
+                out.flush();
 
-        }catch (IOException e) {
-                e.printStackTrace();
+                Thread t = new Thread(new Reception(in));
+                t.start();
+                
+            }catch (IOException e) {
+                    e.printStackTrace();
+            }
         }
+       
     }
 }
