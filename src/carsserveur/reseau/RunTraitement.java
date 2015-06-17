@@ -24,6 +24,7 @@ public class RunTraitement implements Runnable{
     private BrickPi brickPi;
     private Motor leftMotor;
     private Motor rightMotor;
+    private Motor turnMotor;
     
     private volatile boolean up = false;
     private volatile boolean right = false;
@@ -36,19 +37,25 @@ public class RunTraitement implements Runnable{
         brickPi = BrickPi.getBrickPi();
         leftMotor = new Motor();
         rightMotor = new Motor();
+        turnMotor = new Motor();
         
         
         leftMotor.setCommandedOutput(0);
         rightMotor.setCommandedOutput(0);
+        turnMotor.setCommandedOutput(0);
         
         leftMotor.setEnabled(true);
         rightMotor.setEnabled(true);
+        turnMotor.setEnabled(true);
         
         leftMotor.resetEncoder();
         rightMotor.resetEncoder();
+        turnMotor.resetEncoder();
+        
         
         brickPi.setMotor(leftMotor, 2);
         brickPi.setMotor(rightMotor, 1);
+        brickPi.setMotor(turnMotor, 3);
         
     }
     
@@ -86,44 +93,46 @@ public class RunTraitement implements Runnable{
     
     @Override
     public void run() {
+        leftMotor.resetEncoder();
+        rightMotor.resetEncoder();
+        turnMotor.resetEncoder();
+        
+        
         while(true){
             try {
-                if(up && left){
-                    leftMotor.setCommandedOutput(-RunTraitement.SPEED_TURN);
-                    rightMotor.setCommandedOutput(-RunTraitement.SPEED);
-                }
-                else if(up && right){
-                    leftMotor.setCommandedOutput(-RunTraitement.SPEED);
-                    rightMotor.setCommandedOutput(-RunTraitement.SPEED_TURN);
-                }
-                else if(down && left){
-                    leftMotor.setCommandedOutput(RunTraitement.SPEED_TURN);
-                    rightMotor.setCommandedOutput(RunTraitement.SPEED);
-                }
-                else if(down && right){
+                if(up){
                     leftMotor.setCommandedOutput(RunTraitement.SPEED);
-                    rightMotor.setCommandedOutput(RunTraitement.SPEED_TURN);
-                }
-                else if(up){
-                    leftMotor.setCommandedOutput(-RunTraitement.SPEED);
-                    rightMotor.setCommandedOutput(-RunTraitement.SPEED);
+                    rightMotor.setCommandedOutput(RunTraitement.SPEED);
                 }
                 else if(down){
-                    leftMotor.setCommandedOutput(RunTraitement.SPEED);
-                    rightMotor.setCommandedOutput(RunTraitement.SPEED);
-                }
-                else if(left){
-                    leftMotor.setCommandedOutput(0);
+                    leftMotor.setCommandedOutput(-RunTraitement.SPEED);
                     rightMotor.setCommandedOutput(-RunTraitement.SPEED);
                 }
-                else if (right){
-                    leftMotor.setCommandedOutput(-RunTraitement.SPEED);
-                    rightMotor.setCommandedOutput(0);
-                }
-                else{
+                else {
                     leftMotor.setCommandedOutput(0);
                     rightMotor.setCommandedOutput(0);
                 }
+                
+                if(right){
+                    
+                    if(turnMotor.getCurrentEncoderValue() >= -40)
+                        turnMotor.rotate(45, -SPEED_TURN);
+                }
+                else if(left){
+                    
+                    if(turnMotor.getCurrentEncoderValue() <= 40)
+                        turnMotor.rotate(45, SPEED_TURN);
+                }
+                else {
+                    if(turnMotor.getCurrentEncoderValue() > 0){
+                        turnMotor.rotate(turnMotor.getCurrentEncoderValue(), -SPEED_TURN);
+                    }
+                    if(turnMotor.getCurrentEncoderValue() < 0) {
+                        turnMotor.rotate(turnMotor.getCurrentEncoderValue(), SPEED_TURN);
+                    }
+                    
+                }
+                
                 brickPi.updateValues();
                 Thread.sleep(150);
             } catch (InterruptedException ex) {
