@@ -115,20 +115,23 @@ public class RunTraitement implements Runnable{
                 
                 if(right){
                     
-                    if(turnMotor.getCurrentEncoderValue() >= -40)
-                        turnMotor.rotate(45, -SPEED_TURN);
+                    if(turnMotor.getCurrentEncoderValue() >= 0)
+                        turnMotor.rotate(200, -SPEED_TURN);
                 }
                 else if(left){
                     
-                    if(turnMotor.getCurrentEncoderValue() <= 40)
-                        turnMotor.rotate(45, SPEED_TURN);
+                    if(turnMotor.getCurrentEncoderValue() <= 0)
+                        turnMotor.rotate(200, SPEED_TURN);
                 }
                 else {
-                    if(turnMotor.getCurrentEncoderValue() > 0){
-                        turnMotor.rotate(turnMotor.getCurrentEncoderValue(), -SPEED_TURN);
+                    
+                    if(turnMotor.getCurrentEncoderValue() > 10){
+                        System.out.println(turnMotor.getCurrentEncoderValue());
+                        turnMotor.rotate(turnMotor.getCurrentEncoderValue()/2, SPEED_TURN);
                     }
-                    if(turnMotor.getCurrentEncoderValue() < 0) {
-                        turnMotor.rotate(turnMotor.getCurrentEncoderValue(), SPEED_TURN);
+                    if(turnMotor.getCurrentEncoderValue() < -10) {
+                        System.out.println(turnMotor.getCurrentEncoderValue());
+                        turnMotor.rotate(turnMotor.getCurrentEncoderValue()/2, -SPEED_TURN);
                     }
                     
                 }
