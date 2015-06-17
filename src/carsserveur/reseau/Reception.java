@@ -35,7 +35,6 @@ public class Reception implements Runnable {
                 
                 message = in.readLine();
                 if(message != null){
-                    System.out.println(message);
                     switch(message.substring(0, 2)){
                                                     
                     case "10":
@@ -67,7 +66,7 @@ public class Reception implements Runnable {
                         trai.setRight(false);
                         break;
                     case "23":
-                        trai.setRight(false);
+                        trai.setLeft(false);
                         break;
 
                     case "01":
@@ -85,7 +84,6 @@ public class Reception implements Runnable {
                         break;
                     }
                 }
-                    System.out.println(message);
                 // TODO traitement
                 
             } catch (IOException ex) {

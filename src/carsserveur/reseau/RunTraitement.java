@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class RunTraitement implements Runnable{
     
-    private static final int SPEED_TURN = 200;
+    private static final int SPEED_TURN = 100;
     private static final int SPEED = 255;
     
     private BrickPi brickPi;
@@ -89,35 +89,35 @@ public class RunTraitement implements Runnable{
         while(true){
             try {
                 if(up && left){
-                    leftMotor.setCommandedOutput(RunTraitement.SPEED_TURN);
-                    rightMotor.setCommandedOutput(RunTraitement.SPEED);
-                }
-                else if(up && right){
-                    leftMotor.setCommandedOutput(RunTraitement.SPEED);
-                    rightMotor.setCommandedOutput(RunTraitement.SPEED_TURN);
-                }
-                else if(down && left){
                     leftMotor.setCommandedOutput(-RunTraitement.SPEED_TURN);
                     rightMotor.setCommandedOutput(-RunTraitement.SPEED);
                 }
-                else if(down && right){
+                else if(up && right){
                     leftMotor.setCommandedOutput(-RunTraitement.SPEED);
                     rightMotor.setCommandedOutput(-RunTraitement.SPEED_TURN);
                 }
-                else if(up){
-                    leftMotor.setCommandedOutput(RunTraitement.SPEED);
+                else if(down && left){
+                    leftMotor.setCommandedOutput(RunTraitement.SPEED_TURN);
                     rightMotor.setCommandedOutput(RunTraitement.SPEED);
                 }
-                else if(down){
+                else if(down && right){
+                    leftMotor.setCommandedOutput(RunTraitement.SPEED);
+                    rightMotor.setCommandedOutput(RunTraitement.SPEED_TURN);
+                }
+                else if(up){
                     leftMotor.setCommandedOutput(-RunTraitement.SPEED);
                     rightMotor.setCommandedOutput(-RunTraitement.SPEED);
                 }
-                else if(left){
-                    leftMotor.setCommandedOutput(0);
+                else if(down){
+                    leftMotor.setCommandedOutput(RunTraitement.SPEED);
                     rightMotor.setCommandedOutput(RunTraitement.SPEED);
                 }
+                else if(left){
+                    leftMotor.setCommandedOutput(0);
+                    rightMotor.setCommandedOutput(-RunTraitement.SPEED);
+                }
                 else if (right){
-                    leftMotor.setCommandedOutput(RunTraitement.SPEED);
+                    leftMotor.setCommandedOutput(-RunTraitement.SPEED);
                     rightMotor.setCommandedOutput(0);
                 }
                 else{
