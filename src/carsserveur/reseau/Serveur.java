@@ -39,6 +39,7 @@ public class Serveur {
             out.println("\t - PHAN Dominique");
             out.println("\t - LE BOT Axel");
             out.println("\t - DUCOROY Maxime");
+            out.flush();
             out.println("00 - Début Transmission");
             out.flush();
             

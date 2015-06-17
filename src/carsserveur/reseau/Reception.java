@@ -34,6 +34,7 @@ public class Reception implements Runnable {
                 
                 message = in.readLine();
                 if(message != null){
+                    System.out.println(message);
                     switch(message.substring(0, 2)){
                                                     
                     case "10":
