@@ -22,6 +22,7 @@ public class Serveur {
     Socket socketduserveur;
     BufferedReader in = null;
     PrintWriter out;
+    Thread t = null;
     
     public Serveur(ServerSocket socketserveur) {
 		
@@ -43,7 +44,10 @@ public class Serveur {
                 out.println("00 - Début Transmission");
                 out.flush();
 
-                Thread t = new Thread(new Reception(in));
+                if(t != null){
+                    t.interrupt();
+                }
+                t = new Thread(new Reception(in));
                 t.start();
                 
             }catch (IOException e) {

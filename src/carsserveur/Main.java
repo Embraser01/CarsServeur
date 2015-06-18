@@ -8,7 +8,6 @@ package carsserveur;
 import carsserveur.reseau.Serveur;
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,12 +25,12 @@ public class Main {
         ServerSocket socketserver;
         
         Serveur server;
+        
         try {
             socketserver = new ServerSocket(42424);
             
-            server = new Serveur(socketserver);
-            //socketduserveur.close();
-            //socketserver.close();
+            new Serveur(socketserver);
+            socketserver.close();
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
