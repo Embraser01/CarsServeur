@@ -5,7 +5,6 @@
  */
 package carsserveur.reseau;
 
-import carsserveur.Main;
 import com.ergotech.brickpi.BrickPi;
 import com.ergotech.brickpi.motion.Motor;
 import java.io.IOException;
@@ -18,19 +17,27 @@ import java.util.logging.Logger;
  */
 public class RunTraitement implements Runnable{
     
-    private static final int SPEED_TURN = 170;
-    private static final int SPEED = 255;
+    //private static final int SPEED_TURN = 170;
     private static final double ANGLE = 0.125;
     
-    private BrickPi brickPi;
-    private Motor leftMotor;
-    private Motor rightMotor;
-    private Motor turnMotor;
+    private static final int SPEED_MAX = 255;
+    
+    private final BrickPi brickPi;
+    private final Motor leftMotor;
+    private final Motor rightMotor;
+    private final Motor turnMotor;
+    
+    
+    private volatile int leftMotorSpeed = 0;
+    private volatile int rightMotorSpeed = 0;
+    private volatile int turnMotorSpeed = 0;
+    
     
     private volatile boolean up = false;
     private volatile boolean right = false;
     private volatile boolean down = false;
     private volatile boolean left = false;
+    
 
 
     public RunTraitement() {
@@ -54,101 +61,58 @@ public class RunTraitement implements Runnable{
         turnMotor.resetEncoder();
         
         
-        brickPi.setMotor(leftMotor, 2);
-        brickPi.setMotor(rightMotor, 1);
-        brickPi.setMotor(turnMotor, 3);
+        brickPi.setMotor(leftMotor, 3);
+        brickPi.setMotor(rightMotor, 2);
+        brickPi.setMotor(turnMotor, 1);
         
     }
-    
-    public boolean isUp() {
-        return up;
+
+    public int getLeftMotorSpeed() {
+        return leftMotorSpeed;
     }
 
-    public void setUp(boolean up) {
-        this.up = up;
+    public void setLeftMotorSpeed(int leftMotorSpeed) {
+        this.leftMotorSpeed = leftMotorSpeed % SPEED_MAX;
     }
 
-    public boolean isRight() {
-        return right;
+    public int getRightMotorSpeed() {
+        return rightMotorSpeed;
     }
 
-    public void setRight(boolean right) {
-        this.right = right;
+    public void setRightMotorSpeed(int rightMotorSpeed) {
+        this.rightMotorSpeed = rightMotorSpeed % SPEED_MAX;
     }
 
-    public boolean isDown() {
-        return down;
+    public int getTurnMotorSpeed() {
+        return turnMotorSpeed;
     }
 
-    public void setDown(boolean down) {
-        this.down = down;
-    }
-
-    public boolean isLeft() {
-        return left;
-    }
-
-    public void setLeft(boolean left) {
-        this.left = left;
+    public void setTurnMotorSpeed(int turnMotorSpeed) {
+        this.turnMotorSpeed = turnMotorSpeed % SPEED_MAX;
     }
     
     @Override
     public void run() {
-        boolean isRight = false;
-        boolean isLeft = false;
+//        boolean isRight = false;
+//        boolean isLeft = false;
         leftMotor.resetEncoder();
         rightMotor.resetEncoder();
         turnMotor.resetEncoder();
         
         
-        while(true){
+        while (true) {
             try {
-                if(up){
-                    leftMotor.setCommandedOutput(-RunTraitement.SPEED);
-                    rightMotor.setCommandedOutput(-RunTraitement.SPEED);
-                }
-                else if(down){
-                    leftMotor.setCommandedOutput(RunTraitement.SPEED);
-                    rightMotor.setCommandedOutput(RunTraitement.SPEED);
-                }
-                else {
-                    leftMotor.setCommandedOutput(0);
-                    rightMotor.setCommandedOutput(0);
-                }
-                
-                if(right){
-                    if(!isRight){
-                        turnMotor.setCommandedOutput(-SPEED);
-                        isLeft = false;
-                        isRight = true;
-                    }
-                }
-                else if(left){
-                    if(!isLeft){
-                        turnMotor.setCommandedOutput(SPEED);
-                        isRight = false;
-                        isLeft = true;
-                    }
-                }
-                else {
-                    if(isRight){
-                        turnMotor.rotate(ANGLE/2, SPEED_TURN);
-                        isRight = false;
-                    }
-                    if(isLeft){
-                        turnMotor.rotate(ANGLE/2, -SPEED_TURN);
-                        isLeft = false;
-                    }
-                }
+                leftMotor.setCommandedOutput(leftMotorSpeed);
+                rightMotor.setCommandedOutput(rightMotorSpeed);
+                turnMotor.setCommandedOutput(turnMotorSpeed);
                 
                 brickPi.updateValues();
                 Thread.sleep(150);
             } catch (InterruptedException ex) {
             // ignore
             } catch (IOException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
         }
     }
-    
 }

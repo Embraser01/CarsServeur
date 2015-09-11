@@ -35,54 +35,11 @@ public class Reception implements Runnable {
                 
                 message = in.readLine();
                 if(message != null){
-                    switch(message.substring(0, 2)){
-                                                    
-                    case "10":
-                        trai.setUp(true);
-                        trai.setDown(false);
-                        break;
-                    case "20":
-                        trai.setUp(false);
-                        break;
-
-                    case "11":
-                        trai.setRight(true);
-                        trai.setLeft(false);
-                        break;
-                    case "21":
-                        trai.setRight(false);
-                        break;
-
-                    case "12":
-                        trai.setDown(true);
-                        trai.setUp(false);
-                        break;
-                    case "22":
-                        trai.setDown(false);
-                        break;
-
-                    case "13":
-                        trai.setLeft(true);
-                        trai.setRight(false);
-                        break;
-                    case "23":
-                        trai.setLeft(false);
-                        break;
-
-                    case "01":
-                        trai.setUp(false);
-                        trai.setRight(false);
-                        trai.setDown(false);
-                        trai.setLeft(false);
-                        break;
-
-                    default:
-                        trai.setUp(false);
-                        trai.setRight(false);
-                        trai.setDown(false);
-                        trai.setLeft(false);
-                        break;
-                    }
+                    String speeds[] = message.split("/");
+                    
+                    trai.setLeftMotorSpeed(Integer.parseInt(speeds[0]));
+                    trai.setTurnMotorSpeed(Integer.parseInt(speeds[1]));
+                    trai.setRightMotorSpeed(Integer.parseInt(speeds[2]));
                 }
                 // TODO traitement
                 
