@@ -11,48 +11,56 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Marc-Antoine
  */
-public class Serveur {
+public class Serveur{
     
-    ServerSocket socketserver;
-    Socket socketduserveur;
-    BufferedReader in = null;
-    PrintWriter out;
-    Thread t = null;
-    
-    public Serveur(ServerSocket socketserveur) {
-		
-        this.socketserver = socketserveur;
+    public static void main(String[] args) {
         
-        while(true){
-            try {
-                this.socketduserveur = socketserver.accept();
-
-                System.out.println("Nouveau client connecté !");
-                out = new PrintWriter(socketduserveur.getOutputStream());
-                in = new BufferedReader(new InputStreamReader(socketduserveur.getInputStream()));
-                out.println("Vous êtes bien connecté sur le robot du projet Cars | Semaine Spé 2 2015 avec :");
-                out.println("\t - FERNANDES Marc-Antoine");
-                out.println("\t - PHAN Dominique");
-                out.println("\t - LE BOT Axel");
-                out.println("\t - DUCOROY Maxime");
-                out.flush();
-                out.println("00 - Début Transmission");
-                out.flush();
-
-                if(t != null){
-                    t.interrupt();
-                }
-                t = new Thread(new Reception(in));
-                t.start();
-                
-            }catch (IOException e) {
+        ServerSocket socketserver;
+        Socket socketduserveur;
+        BufferedReader in = null;
+        PrintWriter out;
+        Thread t = null;
+		
+        try {
+            socketserver = new ServerSocket(42424);
+            
+            while(true){
+                try {
+                    socketduserveur = socketserver.accept();
+                    
+                    System.out.println("Nouveau client connecté !");
+                    out = new PrintWriter(socketduserveur.getOutputStream());
+                    in = new BufferedReader(new InputStreamReader(socketduserveur.getInputStream()));
+                    out.println("Vous êtes bien connecté sur le robot du projet Cars | Semaine Spé 2 2015 avec :");
+                    out.println("\t - FERNANDES Marc-Antoine");
+                    out.println("\t - PHAN Dominique");
+                    out.println("\t - LE BOT Axel");
+                    out.println("\t - DUCOROY Maxime");
+                    out.flush();
+                    out.println("00 - Début Transmission");
+                    out.flush();
+                    
+                    if(t != null){
+                        t.interrupt();
+                    }
+                    t = new Thread(new Reception(in));
+                    t.start();
+                    
+                }catch (IOException e) {
                     e.printStackTrace();
+                    break;
+                }
             }
+            socketserver.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Serveur.class.getName()).log(Level.SEVERE, null, ex);
         }
        
     }
