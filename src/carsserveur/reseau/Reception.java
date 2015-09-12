@@ -30,6 +30,7 @@ public class Reception implements Runnable {
     public void run() {
         
         this.threadTrai.start();
+        
         while(true){
             try {
                 
@@ -37,11 +38,18 @@ public class Reception implements Runnable {
                 if(message != null){
                     String speeds[] = message.split("/");
                     
-                    trai.setLeftMotorSpeed(Integer.parseInt(speeds[0]));
-                    trai.setTurnMotorSpeed(Integer.parseInt(speeds[1]));
-                    trai.setRightMotorSpeed(Integer.parseInt(speeds[2]));
+                    try {
+                        trai.setLeftMotorSpeed(Integer.parseInt(speeds[0]));
+                        trai.setTurnMotorSpeed(Integer.parseInt(speeds[1]));
+                        trai.setRightMotorSpeed(Integer.parseInt(speeds[2]));
+                    }
+                    catch (Exception e){
+                        trai.setLeftMotorSpeed(0);
+                        trai.setTurnMotorSpeed(0);
+                        trai.setRightMotorSpeed(0);
+                        System.out.printf(e.getMessage());
+                    }                    
                 }
-                // TODO traitement
                 
             } catch (IOException ex) {
                 //Logger.getLogger(Reception.class.getName()).log(Level.SEVERE, null, ex);

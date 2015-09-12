@@ -8,8 +8,6 @@ package carsserveur.reseau;
 import com.ergotech.brickpi.BrickPi;
 import com.ergotech.brickpi.motion.Motor;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
