@@ -5,6 +5,8 @@
  */
 package carsserveur.reseau;
 
+import carserveur.findprotocole.BroadcastListener;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,8 +29,17 @@ public class Serveur{
         BufferedReader in = null;
         PrintWriter out;
         Thread t = null;
+
+        BroadcastListener broadcastListener = null;
+        Thread threadBroadCastListener = null;
 		
         try {
+
+            broadcastListener = new BroadcastListener(42425);
+            threadBroadCastListener = new Thread(broadcastListener);
+            threadBroadCastListener.start();
+
+
             socketserver = new ServerSocket(42424);
             
             while(true){

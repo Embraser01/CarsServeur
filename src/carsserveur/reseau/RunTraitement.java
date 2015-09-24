@@ -30,12 +30,6 @@ public class RunTraitement implements Runnable{
     private volatile int rightMotorSpeed = 0;
     private volatile int turnMotorSpeed = 0;
     
-    
-    private volatile boolean up = false;
-    private volatile boolean right = false;
-    private volatile boolean down = false;
-    private volatile boolean left = false;
-    
 
 
     public RunTraitement() {
