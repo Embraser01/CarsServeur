@@ -48,11 +48,6 @@ public class RunTraitement implements Runnable{
         rightMotor.setEnabled(true);
         turnMotor.setEnabled(true);
         
-        leftMotor.resetEncoder();
-        rightMotor.resetEncoder();
-        turnMotor.resetEncoder();
-        
-        
         brickPi.setMotor(leftMotor, 3);
         brickPi.setMotor(rightMotor, 2);
         brickPi.setMotor(turnMotor, 1);
@@ -82,6 +77,20 @@ public class RunTraitement implements Runnable{
     public void setTurnMotorSpeed(int turnMotorSpeed) {
         this.turnMotorSpeed = turnMotorSpeed % SPEED_MAX;
     }
+
+
+    public void setupTurnMotor(){
+        turnMotor.resetEncoder();
+        turnMotor.rotate(-180,SPEED_MAX);
+
+        try {
+            Thread.sleep(150);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        turnMotor.rotate(180,SPEED_MAX);
+    }
     
     @Override
     public void run() {
@@ -89,7 +98,7 @@ public class RunTraitement implements Runnable{
 //        boolean isLeft = false;
         leftMotor.resetEncoder();
         rightMotor.resetEncoder();
-        turnMotor.resetEncoder();
+        setupTurnMotor();
         
         
         while (true) {
@@ -98,13 +107,12 @@ public class RunTraitement implements Runnable{
                 rightMotor.setCommandedOutput(rightMotorSpeed);
                 turnMotor.setCommandedOutput(turnMotorSpeed);
                 
-                brickPi.updateValues();
+                //brickPi.updateValues();
                 Thread.sleep(150);
             } catch (InterruptedException ex) {
-            // ignore
-            } catch (IOException ex) {
-                
+                // ignore
             }
+
         }
     }
 }

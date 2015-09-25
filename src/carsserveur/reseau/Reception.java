@@ -30,6 +30,7 @@ public class Reception implements Runnable {
     public void run() {
         
         this.threadTrai.start();
+        System.out.println("Now Listening");
         
         while(true){
             try {
@@ -42,6 +43,7 @@ public class Reception implements Runnable {
                         trai.setLeftMotorSpeed(Integer.parseInt(speeds[0]));
                         trai.setTurnMotorSpeed(Integer.parseInt(speeds[1]));
                         trai.setRightMotorSpeed(Integer.parseInt(speeds[2]));
+                        System.out.println(message);
                     }
                     catch (Exception e){
                         trai.setLeftMotorSpeed(0);
