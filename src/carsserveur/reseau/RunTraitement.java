@@ -29,6 +29,7 @@ public class RunTraitement implements Runnable{
     private volatile int leftMotorSpeed = 0;
     private volatile int rightMotorSpeed = 0;
     private volatile int turnMotorSpeed = 0;
+    private volatile int oldTurnValue = -1;
     
 
 
@@ -84,18 +85,31 @@ public class RunTraitement implements Runnable{
         turnMotor.rotate(-180,SPEED_MAX);
 
         try {
+
+            brickPi.updateValues();
             Thread.sleep(150);
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         turnMotor.rotate(180,SPEED_MAX);
+
+        try {
+
+            brickPi.updateValues();
+            Thread.sleep(150);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     @Override
     public void run() {
-//        boolean isRight = false;
-//        boolean isLeft = false;
+
         leftMotor.resetEncoder();
         rightMotor.resetEncoder();
         setupTurnMotor();
@@ -103,14 +117,29 @@ public class RunTraitement implements Runnable{
         
         while (true) {
             try {
+
                 leftMotor.setCommandedOutput(leftMotorSpeed);
                 rightMotor.setCommandedOutput(rightMotorSpeed);
-                turnMotor.setCommandedOutput(turnMotorSpeed);
-                
-                //brickPi.updateValues();
+
+                if(oldTurnValue != 0){
+
+                    if(turnMotorSpeed == 0){
+                        turnMotor.rotate(1,255);
+                    }
+                    turnMotor.rotate(turnMotorSpeed % 0.5,SPEED_MAX);
+                    oldTurnValue = 0;
+
+                } else {
+
+                }
+
+
+                brickPi.updateValues();
                 Thread.sleep(150);
             } catch (InterruptedException ex) {
                 // ignore
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
         }

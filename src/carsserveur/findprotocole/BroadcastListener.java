@@ -1,4 +1,4 @@
-package carserveur.findprotocole;
+package carsserveur.findprotocole;
 
 import java.io.IOException;
 import java.net.*;
@@ -29,7 +29,6 @@ public class BroadcastListener implements Runnable {
             while(true){
                 System.out.println("Waiting for request");
                 socket.receive(packet);
-                // TODO Gestion renvoie packet
 
                 String response = "It's me !";
 
