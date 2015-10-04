@@ -55,7 +55,7 @@ public class Serveur{
                     out.println("\t - LE BOT Axel");
                     out.println("\t - DUCOROY Maxime");
                     out.flush();
-                    out.println("00 - Début Transmission");
+                    out.println("Début Transmission");
                     out.flush();
                     
                     if(t != null){
@@ -70,9 +70,7 @@ public class Serveur{
                 }
             }
             socketserver.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Serveur.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (IOException ex) {}
        
     }
 }

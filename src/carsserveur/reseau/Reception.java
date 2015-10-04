@@ -53,9 +53,7 @@ public class Reception implements Runnable {
                     }                    
                 }
                 
-            } catch (IOException ex) {
-                //Logger.getLogger(Reception.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } catch (IOException ex) {}
         }
     }
     
