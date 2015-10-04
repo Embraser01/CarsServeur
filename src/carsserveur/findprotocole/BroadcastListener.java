@@ -16,7 +16,7 @@ public class BroadcastListener implements Runnable {
 
     @Override
     public void run() {
-        if(port == -1) return;
+        if (port == -1) return;
 
         try {
             DatagramSocket socket = new DatagramSocket(port, InetAddress.getByName("0.0.0.0"));
@@ -24,9 +24,9 @@ public class BroadcastListener implements Runnable {
             System.out.println("Listen on " + socket.getLocalAddress());
 
             byte[] buf = new byte[256];
-            DatagramPacket packet = new DatagramPacket(buf,buf.length);
+            DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
-            while(true){
+            while (true) {
                 System.out.println("Waiting for request");
                 socket.receive(packet);
 
@@ -35,7 +35,7 @@ public class BroadcastListener implements Runnable {
                 buf = response.getBytes();
                 InetAddress address = packet.getAddress();
                 int tmp_port = packet.getPort();
-                packet = new DatagramPacket(buf,buf.length,address,tmp_port);
+                packet = new DatagramPacket(buf, buf.length, address, tmp_port);
                 socket.send(packet);
             }
         } catch (SocketException e) {

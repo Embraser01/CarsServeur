@@ -18,13 +18,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Marc-Antoine
  */
-public class Serveur{
-    
+public class Serveur {
+
     public static void main(String[] args) {
-        
+
         ServerSocket socketserver;
         Socket socketduserveur;
         BufferedReader in = null;
@@ -33,7 +32,7 @@ public class Serveur{
 
         BroadcastListener broadcastListener = null;
         Thread threadBroadCastListener = null;
-		
+
         try {
 
             broadcastListener = new BroadcastListener(42425);
@@ -42,11 +41,11 @@ public class Serveur{
 
 
             socketserver = new ServerSocket(42424);
-            
-            while(true){
+
+            while (true) {
                 try {
                     socketduserveur = socketserver.accept();
-                    
+
                     System.out.println("Nouveau client connecté !");
                     out = new PrintWriter(socketduserveur.getOutputStream());
                     in = new BufferedReader(new InputStreamReader(socketduserveur.getInputStream()));
@@ -58,20 +57,21 @@ public class Serveur{
                     out.flush();
                     out.println("Début Transmission");
                     out.flush();
-                    
-                    if(t != null){
+
+                    if (t != null) {
                         t.interrupt();
                     }
                     t = new Thread(new Reception(in));
                     t.start();
-                    
-                }catch (IOException e) {
+
+                } catch (IOException e) {
                     e.printStackTrace();
                     break;
                 }
             }
             socketserver.close();
-        } catch (IOException ex) {}
-       
+        } catch (IOException ex) {
+        }
+
     }
 }
