@@ -29,7 +29,6 @@ public class Reception implements Runnable {
     public void run() {
 
         this.threadTrai.start();
-        System.out.println("Now Listening");
 
         while (true) {
             try {

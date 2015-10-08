@@ -16,7 +16,7 @@ import java.io.IOException;
 public class RunTraitement implements Runnable {
 
     private static final int SPEED_MAX = 256;
-    private static final int SPEED_TURN = 120;
+    private static final int SPEED_TURN = 121;
 
     private final BrickPi brickPi;
     private final Motor leftMotor;
@@ -105,17 +105,17 @@ public class RunTraitement implements Runnable {
                 leftMotor.setCommandedOutput(leftMotorSpeed);
                 rightMotor.setCommandedOutput(rightMotorSpeed);
 
-                if (oldTurnMotorSpeed != turnMotorSpeed) {
-                    turnMotor.setCommandedOutput(turnMotorSpeed);
-                    oldTurnMotorSpeed = turnMotorSpeed;
 
-                } else if (turnMotorSpeed == 0) {
-                    turnMotor.setCommandedOutput(-oldTurnMotorSpeed);
-                    oldTurnMotorSpeed = 0;
-                    turnMotorSpeed = 0;
+                int diff = Math.abs(turnMotorSpeed - oldTurnMotorSpeed);
+
+                if(turnMotorSpeed > oldTurnMotorSpeed) {
+                    turnMotor.setCommandedOutput(diff);
+                    oldTurnMotorSpeed = turnMotorSpeed;
                 } else {
-                    turnMotor.setCommandedOutput(0);
+                    turnMotor.setCommandedOutput(-diff);
+                    oldTurnMotorSpeed = turnMotorSpeed;
                 }
+
 
                 brickPi.updateValues();
                 Thread.sleep(200);

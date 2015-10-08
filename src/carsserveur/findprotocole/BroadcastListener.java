@@ -21,13 +21,11 @@ public class BroadcastListener implements Runnable {
         try {
             DatagramSocket socket = new DatagramSocket(port, InetAddress.getByName("0.0.0.0"));
             socket.setBroadcast(true);
-            System.out.println("Listen on " + socket.getLocalAddress());
 
             byte[] buf = new byte[256];
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
             while (true) {
-                System.out.println("Waiting for request");
                 socket.receive(packet);
 
                 String response = "It's me !";
